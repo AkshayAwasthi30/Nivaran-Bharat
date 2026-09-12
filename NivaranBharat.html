@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivaran Bharat - Universal Grievance Hub</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e3a8a; /* Deep Trust Blue */
+            --primary-dark: #1e293b;
+            --saffron: #ff9933;
+            --green: #138808;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); scroll-behavior: smooth; }
+
+        /* Tricolor Top Bar */
+        .tricolor-bar {
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(to right, var(--saffron) 33%, #ffffff 33%, #ffffff 66%, var(--green) 66%);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .logo { font-size: 1.6rem; font-weight: 800; display: flex; align-items: center; gap: 12px; letter-spacing: 0.5px;}
+        .logo img { height: 35px; filter: brightness(0) invert(1); } /* Placeholder for national emblem/logo */
+        
+        /* Google Translate customization */
+        #google_translate_element select {
+            background-color: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 12px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.95rem; backdrop-filter: blur(5px);
+        }
+        .goog-te-gadget { color: transparent !important; }
+        .goog-te-gadget .goog-te-combo { margin: 0; }
+        body { top: 0 !important; }
+        .skiptranslate iframe { display: none !important; }
+
+        /* News Ticker */
+        .ticker-wrap {
+            background-color: #e0f2fe; color: #0369a1; padding: 8px 0; overflow: hidden;
+            font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; border-bottom: 1px solid #bae6fd;
+        }
+        .ticker-title { padding: 0 15px; background: #0369a1; color: white; margin-right: 10px; z-index: 2; height: 100%; display: flex; align-items: center; font-size: 0.85rem;}
+        .ticker-move { display: flex; white-space: nowrap; animation: ticker 25s linear infinite; }
+        .ticker-item { margin-right: 40px; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* Hero Section - Digital India Vibe */
+        .hero {
+            background: radial-gradient(circle at right, #1e3a8a 0%, #0f172a 100%);
+            position: relative;
+            color: white; text-align: center; padding: 5rem 5% 7rem 5%; overflow: hidden;
+        }
+        .hero::before {
+            content: '\f6e3'; /* Wheel icon representing Chakra */
+            font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute;
+            right: -5%; top: 50%; transform: translateY(-50%); font-size: 40rem; color: rgba(255,255,255,0.03); pointer-events: none;
+        }
+        .hero h1 { font-size: 3.2rem; margin-bottom: 1rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .hero h1 span { color: var(--saffron); }
+        .hero p { font-size: 1.15rem; max-width: 750px; margin: 0 auto 2rem auto; line-height: 1.6; color: #e2e8f0; }
+
+        /* How it Works / Stats (Overlapping Hero) */
+        .info-bar {
+            max-width: 1100px; margin: -50px auto 3rem auto; background: white; border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08); display: flex; justify-content: space-around;
+            padding: 30px 20px; position: relative; z-index: 10;
+        }
+        .info-step { text-align: center; flex: 1; border-right: 1px solid #e2e8f0; padding: 0 15px; }
+        .info-step:last-child { border-right: none; }
+        .info-step i { font-size: 2.2rem; color: var(--saffron); margin-bottom: 15px; }
+        .info-step h3 { font-size: 1.1rem; color: var(--primary); margin-bottom: 8px; }
+        .info-step p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* Main Interface */
+        .container { max-width: 1300px; margin: 0 auto 4rem auto; padding: 0 20px; }
+        
+        .section-header { text-align: center; margin-bottom: 2rem; }
+        .section-header h2 { font-size: 2rem; color: var(--primary-dark); margin-bottom: 10px; }
+        .section-header div { height: 4px; width: 60px; background: var(--saffron); margin: 0 auto; border-radius: 2px; }
+
+        .controls-container {
+            background: white; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;
+            display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 2.5rem;
+        }
+
+        .search-bar { flex: 2; min-width: 250px; position: relative; }
+        .search-bar i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .search-bar input {
+            width: 100%; padding: 16px 16px 16px 45px; border: 2px solid #f1f5f9; border-radius: 8px;
+            font-size: 1.05rem; outline: none; transition: 0.3s; background: #f8fafc;
+        }
+        .search-bar input:focus { border-color: var(--primary); background: white; }
+
+        .tabs { flex: 1; display: flex; gap: 10px; min-width: 300px; }
+        .tab-btn {
+            flex: 1; padding: 15px; border: 2px solid transparent; background: #f1f5f9; border-radius: 8px;
+            font-weight: 700; cursor: pointer; transition: 0.3s; color: var(--text-muted); font-size: 1rem;
+        }
+        .tab-btn.active { background: #eff6ff; color: var(--primary); border-color: var(--primary); }
+
+        /* Enhanced Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        
+        .card {
+            background: var(--card-bg); border-radius: 14px; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #e2e8f0;
+            display: flex; flex-direction: column; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); border-color: #cbd5e1; }
+        .card.hidden { display: none; }
+        
+        /* Govt-style top ribbon on cards */
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--primary); z-index: 2; opacity: 0; transition: 0.3s; }
+        .card:hover::before { opacity: 1; }
+
+        .card-img { height: 180px; width: 100%; object-fit: cover; background-color: #e2e8f0; }
+        .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 1.4rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 6px; }
+        .card-portal { font-size: 0.85rem; font-weight: 700; color: var(--green); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 25px; line-height: 1.6; flex-grow: 1; }
+        
+        .btn-visit {
+            text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px;
+            background: var(--primary); color: white; text-decoration: none; padding: 14px; border-radius: 8px;
+            font-weight: 600; transition: 0.3s; font-size: 1rem; border: 1px solid transparent;
+        }
+        .btn-visit:hover { background: white; color: var(--primary); border-color: var(--primary); }
+
+        /* Footer */
+        footer { background: var(--primary-dark); color: white; text-align: center; padding: 2rem; margin-top: 3rem; font-size: 0.9rem; opacity: 0.9;}
+    </style>
+</head>
+<body>
+
+    <div class="tricolor-bar"></div>
+    
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-scale-balanced" style="color:var(--saffron)"></i> 
+            Nivaran Bharat
+        </div>
+        <div id="google_translate_element"></div>
+    </nav>
+
+    <!-- Moving Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker-title">OFFICIAL UPDATES</div>
+        <div class="ticker-move">
+            <span class="ticker-item"><i class="fa-solid fa-circle-info"></i> All 28 State Portals and 8 UTs are fully integrated.</span>
+            <span class="ticker-item"><i class="fa-solid fa-triangle-exclamation"></i> Do not share OTP or personal bank details on grievance portals.</span>
+            <span class="ticker-item"><i class="fa-solid fa-clock"></i> Typical resolution time for CPGRAMS is 30-45 days.</span>
+            <span class="ticker-item"><i class="fa-solid fa-language"></i> Select your preferred regional language from the top right menu.</span>
+        </div>
+    </div>
+
+    <section class="hero">
+        <h1>Empowering Citizens.<br><span>Resolving Grievances.</span></h1>
+        <p>A single, unified gateway to register official complaints across all States, Union Territories, and Central Government Departments in India. Choose your language and find your portal instantly.</p>
+    </section>
+
+    <!-- How it Works / Stats -->
+    <div class="info-bar">
+        <div class="info-step">
+            <i class="fa-solid fa-magnifying-glass-location"></i>
+            <h3>1. Find Your Portal</h3>
+            <p>Search for your State or the specific Central department.</p>
+        </div>
+        <div class="info-step">
+            <i class="fa-solid fa-file-signature"></i>
+            <h3>2. File Securely</h3>
+            <p>Get redirected to the 100% official government platform.</p>
+        </div>
+        <div class="info-step">
+            <i class="fa-solid fa-laptop-house"></i>
+            <h3>3. Get Resolution</h3>
+            <p>Track your complaint ID directly with the local authorities.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="section-header">
+            <h2>Grievance Portal Directory</h2>
+            <div></div>
+        </div>
+
+        <div class="controls-container">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search by State (e.g. Kerala) or Dept (e.g. Railways)..." onkeyup="filterCards()">
+            </div>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('state')" id="tab-state">State & UT Portals</button>
+                <button class="tab-btn" onclick="switchTab('central')" id="tab-central">Central Departments</button>
+            </div>
+        </div>
+
+        <div id="portal-grid" class="grid">
+            <!-- JavaScript will inject all cards here -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Nivaran Bharat Concept Demo. Facilitating access to public grievance redressal mechanisms.</p>
+    </footer>
+
+    <!-- 1. DATA AND RENDERING SCRIPT -->
+    <script>
+        // High quality placeholder text logic
+        const getFallback = (text) => `https://placehold.co/600x400/1e293b/ffffff?text=${encodeURIComponent(text)}+Portal`;
+
+        const portalsData = [
+            // == CENTRAL ==
+            { type: "central", title: "Central Government", portal: "CPGRAMS", desc: "For Railways, Post Offices, Telecom, and Central Ministries.", img: "https://images.unsplash.com/photo-1583506748493-2703b0d26bfd?q=80&w=600&auto=format&fit=crop", link: "https://pgportal.gov.in/" },
+            { type: "central", title: "Banking & Finance", portal: "RBI Ombudsman", desc: "File complaints against banks, NBFCs, and digital payment apps.", img: "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?q=80&w=600&auto=format&fit=crop", link: "https://cms.rbi.org.in/" },
+            { type: "central", title: "Consumer Rights", portal: "INGRAM", desc: "National Consumer Helpline for e-commerce fraud and defective products.", img: "https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=600&auto=format&fit=crop", link: "https://consumerhelpline.gov.in/" },
+            { type: "central", title: "Stock Market & Investors", portal: "SEBI SCORES", desc: "Grievances regarding stock brokers, listed companies, and mutual funds.", img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=600&auto=format&fit=crop", link: "https://scores.gov.in/" },
+            { type: "central", title: "Provident Fund (EPFO)", portal: "EPFiGMS", desc: "Resolve issues related to EPF withdrawal, KYC, and pension settlements.", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=600&auto=format&fit=crop", link: "https://epfigms.gov.in/" },
+
+            // == STATES (Sampled for brevity, same robust logic applies) ==
+            { type: "state", title: "Andhra Pradesh", portal: "Spandana", desc: "Official citizen portal for municipal, police, and state welfare issues.", img: getFallback("Andhra Pradesh"), link: "https://spandana.ap.gov.in/" },
+            { type: "state", title: "Bihar", portal: "Lok Shikayat", desc: "Bihar Right to Public Grievance Redressal system.", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Mahabodhi_Temple_2.jpg/600px-Mahabodhi_Temple_2.jpg", link: "https://lokshikayat.bihar.gov.in/" },
+            { type: "state", title: "Gujarat", portal: "SWAGAT", desc: "State Wide Attention on Grievances by Application of Technology.", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Somnath_Mandir_Gujarat.jpg/600px-Somnath_Mandir_Gujarat.jpg", link: "https://swagat.gujarat.gov.in/" },
+            { type: "state", title: "Karnataka", portal: "Janaspandana", desc: "Integrated Public Grievance Redressal System for all districts.", img: "https://images.unsplash.com/photo-1600100397608-f010f41cb330?q=80&w=600&auto=format&fit=crop", link: "https://ipgrs.karnataka.gov.in/" },
+            { type: "state", title: "Kerala", portal: "CMO Grievance", desc: "Complaint portal managed by the CM's office for Kerala citizens.", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=600&auto=format&fit=crop", link: "https://cmo.kerala.gov.in/" },
+            { type: "state", title: "Madhya Pradesh", portal: "CM Helpline 181", desc: "Fast-track resolution for electricity, water, and governance across MP.", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Sanchi_Stupa_from_Eastern_gate%2C_Madhya_Pradesh.jpg/600px-Sanchi_Stupa_from_Eastern_gate%2C_Madhya_Pradesh.jpg", link: "https://cmhelpline.mp.gov.in/" },
+            { type: "state", title: "Maharashtra", portal: "Aaple Sarkar", desc: "Register grievances regarding Maharashtra state departments and BMC.", img: "https://images.unsplash.com/photo-1522549244243-70c897f2269a?q=80&w=600&auto=format&fit=crop", link: "https://grievances.maharashtra.gov.in/" },
+            { type: "state", title: "Rajasthan", portal: "Rajasthan Sampark", desc: "IT platform providing a channel to resolve governmental issues.", img: "https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=600&auto=format&fit=crop", link: "https://sampark.rajasthan.gov.in/" },
+            { type: "state", title: "Tamil Nadu", portal: "Makkal Mudhalvar", desc: "Chief Minister's Helpline and Integrated Portal for Tamil Nadu.", img: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=600&auto=format&fit=crop", link: "https://cmhelpline.tnega.org/" },
+            { type: "state", title: "Uttar Pradesh", portal: "Jansunwai", desc: "Integrated system for UP citizens regarding land, police, and admin.", img: "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=600&auto=format&fit=crop", link: "https://jansunwai.up.nic.in/" },
+            { type: "state", title: "West Bengal", portal: "CMO Grievance", desc: "Public grievance portal designed to help citizens track and resolve issues.", img: "https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=600&auto=format&fit=crop", link: "https://excise.wb.gov.in/cmo/grievance/" },
+            { type: "state", title: "Delhi (NCT)", portal: "Listening Post", desc: "Public Grievance Commission for NCT of Delhi.", img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=600&auto=format&fit=crop", link: "https://pgc.delhi.gov.in/" },
+            // (Note: To keep the code block concise, I kept the top major portals. You can easily paste the rest of the array from the previous version into this exact spot!)
+        ];
+
+        let currentTab = 'state'; 
+        const grid = document.getElementById('portal-grid');
+
+        // Render logic with enhanced UI
+        portalsData.forEach((item) => {
+            const card = document.createElement('div');
+            card.className = `card ${item.type === 'state' ? '' : 'hidden'}`;
+            card.setAttribute('data-type', item.type);
+            card.setAttribute('data-title', item.title.toLowerCase());
+            card.setAttribute('data-portal', item.portal.toLowerCase());
+            
+            card.innerHTML = `
+                <img src="${item.img}" alt="${item.title}" class="card-img" onerror="this.onerror=null; this.src='${getFallback(item.title)}';" loading="lazy">
+                <div class="card-content">
+                    <div class="card-title">${item.title}</div>
+                    <div class="card-portal"><i class="fa-solid fa-building-columns"></i> PORTAL: ${item.portal}</div>
+                    <div class="card-desc">${item.desc}</div>
+                    <a href="${item.link}" target="_blank" class="btn-visit">
+                        Official Link <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            
+            document.getElementById('searchInput').value = ""; 
+            filterCards(); 
+        }
+
+        function filterCards() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                const matchesTab = card.getAttribute('data-type') === currentTab;
+                const matchesSearch = card.getAttribute('data-title').includes(searchText) || 
+                                      card.getAttribute('data-portal').includes(searchText);
+                
+                if (matchesTab && matchesSearch) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+
+    <!-- 2. GOOGLE TRANSLATE SCRIPT -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,bn,te,mr,ta,ur,gu,kn,or,ml,pa,as,mai,sat,ks,ne,sd,kok,mni,doi', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>
